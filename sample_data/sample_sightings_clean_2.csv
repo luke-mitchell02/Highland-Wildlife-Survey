@@ -1,0 +1,11 @@
+first_name,last_name,email,site_name,session_date,start_time,end_time,species_name,count,sighting_time,weather,photo_submitted,notes
+Mairi,Fraser,mairi.fraser@email.com,Skye Cliff Watch,2026-04-06,13:00,15:30,Atlantic Puffin,14,13:27,Windy,Yes,Group clustered on lower ledges
+Mairi,Fraser,mairi.fraser@email.com,Skye Cliff Watch,2026-04-06,13:00,15:30,Razorbill,9,13:27,Windy,No,Mixed flock with puffins
+Mairi,Fraser,mairi.fraser@email.com,Skye Cliff Watch,2026-04-06,13:00,15:30,Kittiwake,21,14:05,Windy,No,Continuous movement around nesting area
+Lewis,Grant,lewis.grant@email.com,Cairngorm Lochan Trail,2026-04-07,06:50,09:40,Mountain Hare,3,07:10,Overcast,Yes,Three together on upper slope
+Lewis,Grant,lewis.grant@email.com,Cairngorm Lochan Trail,2026-04-07,06:50,09:40,Ptarmigan,6,07:10,Overcast,No,Small group flushed from heather
+Lewis,Grant,lewis.grant@email.com,Cairngorm Lochan Trail,2026-04-07,06:50,09:40,Golden Eagle,1,08:22,Overcast,Yes,Single bird soaring high above ridge
+Anna,Stewart,anna.stewart@email.com,Lossiemouth Dune Path,2026-04-08,17:15,19:00,Common Dolphin,4,18:02,Clear,Yes,Visible offshore for several minutes
+Anna,Stewart,anna.stewart@email.com,Lossiemouth Dune Path,2026-04-08,17:15,19:00,Sanderling,11,18:02,Clear,No,Feeding quickly along tideline
+Anna,Stewart,anna.stewart@email.com,Lossiemouth Dune Path,2026-04-08,17:15,19:00,Common Gull,5,18:19,Clear,No,Five resting near dunes
+Anna,Stewart,anna.stewart@email.com,Lossiemouth Dune Path,2026-04-08,17:15,19:00,Peacock Butterfly,2,18:44,Clear,Yes,Seen on flowering plants behind beach

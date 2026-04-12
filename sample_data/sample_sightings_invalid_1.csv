@@ -1,0 +1,11 @@
+first_name,last_name,email,site_name,session_date,start_time,end_time,species_name,count,sighting_time,weather,photo_submitted,notes
+ Eilidh ,MacLeod,EILIDH.M@EMAIL.COM ,Speyside Wetland Centre,03/04/2026,08:30,11:00,osprey,1,09:12,sunny,yes,Extra spaces and mixed case
+Eilidh,MacLeod,eilidh.m@email.com,Speyside Wetland Centre,2026-04-03,08:30,11:00,Golden Plover,4 ,09:12,Sunny,No,Count has trailing space
+Calum,Ross,c.ross_at_email.com,Findhorn Bay Watchpoint,2026-04-04,10:00,12:30,Grey Seal,2,10:41,Cloudy,Yes,Email missing @ symbol
+Calum,Ross,c.ross@email.com,Findhorn Bay Watchpoint,2026-04-04,10:00,12:30,Bottle nose Dolphin,5,11:18,Cloudy,Yes,Species name typo
+Fiona,Munro,fiona.munro@email.com,Rothiemurchus Forest Gate,2026-04-05,10:15,07:45,Red Squirrel,2,08:03,Light Rain,Yes,End time before start time
+Fiona,Munro,fiona.munro@email.com,Rothiemurchus Forest Gate,2026-04-05,07:45,10:15,Pine Marten,-1,08:52,Light Rain,No,Negative count
+Fiona,Munro,fiona.munro@email.com,Rothiemurchus Forest Gate,2026-04-05,07:45,10:15,Wood Ant,18,25:61,Light Rain,No,Impossible time value
+Mairi,Fraser,mairi.fraser@email.com,Skye Clif Watch,2026-04-06,13:00,15:30,Atlantic Puffin,14,13:27,Windy,Yes,
+Lewis,Grant,lewis.grant@email.com,Cairngorm Lochan Trail,2026-04-07,06:50,09:40,Mountain Hare,3,07:10,Overcast,TRUE,Boolean variant to normalise
+Anna,Stewart,anna.stewart@email.com,Lossiemouth Dune Path,2026-04-08,17:15,19:00,Common Gull,0,18:19,Clear,No,Zero count should likely be rejected

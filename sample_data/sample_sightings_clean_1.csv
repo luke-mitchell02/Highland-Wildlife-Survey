@@ -1,0 +1,11 @@
+first_name,last_name,email,site_name,session_date,start_time,end_time,species_name,count,sighting_time,weather,photo_submitted,notes
+Eilidh,MacLeod,eilidh.m@email.com,Speyside Wetland Centre,2026-04-03,08:30,11:00,Osprey,1,09:12,Sunny,Yes,Adult circling over loch
+Eilidh,MacLeod,eilidh.m@email.com,Speyside Wetland Centre,2026-04-03,08:30,11:00,Golden Plover,4,09:12,Sunny,No,Small group feeding near water edge
+Eilidh,MacLeod,eilidh.m@email.com,Speyside Wetland Centre,2026-04-03,08:30,11:00,Common Frog,7,09:45,Sunny,No,Several adults visible in reeds
+Eilidh,MacLeod,eilidh.m@email.com,Speyside Wetland Centre,2026-04-03,08:30,11:00,Dragonfly,3,10:05,Sunny,Yes,Three seen together over pond
+Calum,Ross,c.ross@email.com,Findhorn Bay Watchpoint,2026-04-04,10:00,12:30,Kittiwake,12,10:41,Cloudy,No,Large noisy group on shoreline
+Calum,Ross,c.ross@email.com,Findhorn Bay Watchpoint,2026-04-04,10:00,12:30,Grey Seal,2,10:41,Cloudy,Yes,Pair hauled out on sandbank
+Calum,Ross,c.ross@email.com,Findhorn Bay Watchpoint,2026-04-04,10:00,12:30,Bottlenose Dolphin,5,11:18,Cloudy,Yes,Pod moving east across bay
+Fiona,Munro,fiona.munro@email.com,Rothiemurchus Forest Gate,2026-04-05,07:45,10:15,Red Squirrel,2,08:03,Light Rain,Yes,Two adults chasing through pines
+Fiona,Munro,fiona.munro@email.com,Rothiemurchus Forest Gate,2026-04-05,07:45,10:15,Pine Marten,1,08:52,Light Rain,No,Brief sighting crossing path
+Fiona,Munro,fiona.munro@email.com,Rothiemurchus Forest Gate,2026-04-05,07:45,10:15,Wood Ant,18,09:34,Light Rain,No,Active mound beside trail

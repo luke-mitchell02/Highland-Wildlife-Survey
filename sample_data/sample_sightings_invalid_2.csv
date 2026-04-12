@@ -1,0 +1,11 @@
+first_name,last_name,email,site_name,session_date,start_time,end_time,species_name,count,sighting_time,weather,photo_submitted,notes
+,MacDonald,j.macdonald@email.com,Black Isle Woodland Trail,2026-04-09,09:00,11:15,Buzzard,1,09:48,Cloudy,No,Missing first name
+James,MacDonald,j.macdonald@email.com,Black Isle Woodland Trail,2026-13-09,09:00,11:15,Buzzard,1,09:48,Cloudy,No,Invalid month in date
+James,MacDonald,j.macdonald@email.com,Glasgow City Park,2026-04-09,09:00,11:15,Buzzard,1,09:48,Cloudy,No,Site outside allowed sample sites
+Morag,Sinclair,morag.sinclair@email.com,Lewis Loch Margin,2026-04-10,14:20,16:10,Polar Bear,1,15:03,Cold,Yes,Clearly invalid species for this dataset
+Morag,Sinclair,morag.sinclair@email.com,Lewis Loch Margin,2026-04-10,14.20,16:10,Harbour Seal,2,15:03,Cold,Yes,Start time uses full stop
+Morag,Sinclair,morag.sinclair@email.com,Lewis Loch Margin,2026-04-10,14:20,16:10,Harbour Seal,2,18:45,Cold,Yes,Sighting after session ended
+ Isla ,O'Neil,isla.oneil@email.com ,South Uist Machair Edge,2026-04-11,06:30,09:00,  Lapwing ,6,07:22,Windy,No,Whitespace around fields
+Isla,O'Neil,isla.oneil@email.com,South Uist Machair Edge,2026-04-11,06:30,09:00,Curlew,2,07:22,Windy,Maybe,Photo value not allowed
+Rory,Mackay,rory.mackay@email.com,Glenmore Upland Track,2026-04-12,12:00,14:30,Red Deer,three,13:11,Sunny,No,Count written as word
+Rory,Mackay,rory.mackay@email.com,Glenmore Upland Track,2026-04-12,12:00,14:30,Red Deer,3,13:11,Sunny,No,Potential duplicate of previous row after cleaning
