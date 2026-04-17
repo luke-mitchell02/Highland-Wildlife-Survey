@@ -1,8 +1,10 @@
 import mysql.connector
-import custom_logger
 import os
 
 from dotenv import load_dotenv
+from mysql.connector.cursor import MySQLCursor
+
+from app.components import custom_logger
 
 logger = custom_logger.get_logger()
 load_dotenv()
@@ -17,28 +19,16 @@ def connect():
     )
     return conn
 
-def select(query: str, params: tuple=None):
-    conn = connect()
-    cursor = conn.cursor()
-
+def select(cursor: MySQLCursor, query: str, params: list=None):
     try:
         cursor.execute(operation=query, params=params)
         return cursor.fetchall()
     except mysql.connector.Error as err:
         logger.error(err)
-    finally:
-        cursor.close()
-        conn.close()
 
-def execute(query: str, params: tuple=None):
-    conn = connect()
-    cursor = conn.cursor()
-
+def execute(cursor: MySQLCursor, query: str, params: tuple=None):
     try:
         cursor.execute(operation=query, params=params)
         conn.commit()
     except mysql.connector.Error as err:
         logger.error(err)
-    finally:
-        cursor.close()
-        conn.close()
