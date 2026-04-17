@@ -196,6 +196,20 @@ I will add indexes once the database and application are set up. They will be ch
 
 ---
 
+## Triggers
+
+Two `BEFORE INSERT` triggers have been added to auto-generate the formatted primary key for Sessions and Sightings. This means the application never needs to supply an ID manually.
+
+**before_session_insert** - fires on every insert into `Sessions` and sets `session_id` to `SS_` followed by the next sequential four-digit number (e.g. `SS_0001`).
+
+**before_sighting_insert** - fires on every insert into `Sightings` and sets `sighting_id` to `SI_` followed by the next sequential four-digit number (e.g. `SI_0001`).
+
+Both triggers derive the next number by counting existing rows and adding one, then zero-padding to four digits with `LPAD`.
+
+This may be updated in the future to use MAX() as counting rows is only useful if no rows are ever deleted.
+
+---
+
 ## Stored Procedure
 
 I will add the stored procedure at a later date.

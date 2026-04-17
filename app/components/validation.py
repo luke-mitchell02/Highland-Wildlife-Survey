@@ -15,7 +15,9 @@ WEATHER_ENUM = [
     'hail',
     'sleet',
     'snow',
-    'fog'
+    'fog',
+    'overcast',
+    'windy'
 ]
 
 
@@ -63,21 +65,27 @@ def normalise_boolean(value: str) -> bool | None:
 
     return None
 
-# Validators
+
+def verify_volunteer(cursor: MySQLCursor, value: str) -> dict | None:
+    if not re.match(r"[^@]+@[^@]+\.[^@]+", value):
+        return None
+
+    return db.select(cursor=cursor, query="SELECT volunteer_id, first_name, last_name FROM Volunteers WHERE email = %s", params=[value], one=True)
 
 
-def is_valid_email(value: str) -> bool:
-    if re.match(r"[^@]+@[^@]+\.[^@]+", value):
-        return True
-
-    return False
+def verify_site(cursor: MySQLCursor, value: str) -> dict | None:
+    return db.select(cursor=cursor, query="SELECT site_id, site_name FROM Sites WHERE site_name = %s", params=[value], one=True)
 
 
-def is_valid_site(cursor: MySQLCursor, value: str) -> bool:
-    result = db.select(cursor=cursor, query="SELECT EXISTS(SELECT 1 FROM Sites WHERE site_name = %s)", params=[value])
-    return bool(result[0][0])
+def verify_species(cursor: MySQLCursor, value: str) -> bool:
+    return db.select(cursor=cursor, query="SELECT species_id, species_name FROM Species WHERE species_name = %s", params=[value], one=True)
 
 
-def is_valid_species(cursor: MySQLCursor, value: str) -> bool:
-    result = db.select(cursor=cursor, query="SELECT EXISTS(SELECT 1 FROM Species WHERE species_name = %s)", params=[value])
-    return bool(result[0][0])
+def verify_session(conn, cursor: MySQLCursor, volunteer_id: int, site_id: int, date: datetime, start_time: datetime, end_time: datetime) -> dict | None:
+    existing_session = db.select(cursor=cursor, query="SELECT session_id FROM Sessions WHERE volunteer_id = %s AND site_id = %s AND `date` = %s", params=[volunteer_id, site_id, date.date()], one=True)
+
+    if existing_session:
+        return existing_session
+
+    db.execute(conn=conn, cursor=cursor, query="INSERT INTO Sessions (volunteer_id, site_id, `date`, start_time, end_time) VALUES (%s, %s, %s, %s, %s)", params=[volunteer_id, site_id, date.date(), start_time, end_time])
+    return db.select(cursor=cursor, query="SELECT session_id FROM Sessions WHERE volunteer_id = %s AND site_id = %s AND `date` = %s", params=[volunteer_id, site_id, date.date()], one=True)

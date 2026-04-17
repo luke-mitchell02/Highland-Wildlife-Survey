@@ -47,13 +47,14 @@ CREATE TABLE `Sessions` (
 	`start_time` TIME NOT NULL,
 	`end_time` TIME NOT NULL,
 	PRIMARY KEY (`session_id`) USING BTREE,
+	UNIQUE INDEX `volunteer_id` (`volunteer_id`, `site_id`, `date`) USING BTREE,
 	INDEX `site_idx` (`site_id`) USING BTREE,
-	INDEX `volunteer_idx` (`volunteer_id`) USING BTREE,
 	CONSTRAINT `site_idx` FOREIGN KEY (`site_id`) REFERENCES `Sites` (`site_id`) ON UPDATE NO ACTION ON DELETE NO ACTION,
 	CONSTRAINT `volunteer_idx` FOREIGN KEY (`volunteer_id`) REFERENCES `Volunteers` (`volunteer_id`) ON UPDATE NO ACTION ON DELETE NO ACTION
 )
 COLLATE='utf8mb4_0900_ai_ci'
-ENGINE=InnoDB;
+ENGINE=InnoDB
+;
 
 CREATE TABLE `Sightings` (
 	`sighting_id` VARCHAR(16) NOT NULL COLLATE 'utf8mb4_0900_ai_ci',
@@ -61,7 +62,7 @@ CREATE TABLE `Sightings` (
 	`species_id` VARCHAR(16) NOT NULL COLLATE 'utf8mb4_0900_ai_ci',
 	`individuals_count` INT NOT NULL,
 	`sighting_time` TIME NOT NULL,
-	`weather_conditions` ENUM('Clear','Cloudy','Rain','Snow','Fog') NOT NULL COLLATE 'utf8mb4_0900_ai_ci',
+	`weather_conditions` ENUM('Clear','Cloudy','Light Rain','Heavy Rain','Hail','Sleet','Snow','Fog','Sunny','Overcast','Windy') NOT NULL COLLATE 'utf8mb4_0900_ai_ci',
 	`notes` LONGTEXT NULL DEFAULT NULL COLLATE 'utf8mb4_0900_ai_ci',
 	`photo_submitted` TINYINT NOT NULL,
 	PRIMARY KEY (`sighting_id`) USING BTREE,
@@ -86,3 +87,21 @@ CREATE TABLE `Alerts` (
 )
 COLLATE='utf8mb4_0900_ai_ci'
 ENGINE=InnoDB;
+
+DELIMITER $$
+
+CREATE TRIGGER before_session_insert
+BEFORE INSERT ON `Sessions`
+FOR EACH ROW
+BEGIN
+	SET NEW.session_id = CONCAT('SS_', LPAD((SELECT COUNT(*) + 1 FROM Sessions), 4, '0'));
+END$$
+
+CREATE TRIGGER before_sighting_insert
+BEFORE INSERT ON `Sightings`
+FOR EACH ROW
+BEGIN
+	SET NEW.sighting_id = CONCAT('SI_', LPAD((SELECT COUNT(*) + 1 FROM Sightings), 4, '0'));
+END$$
+
+DELIMITER ;
