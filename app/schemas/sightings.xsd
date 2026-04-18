@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="sightings">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="sighting" type="SightingType" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:complexType name="SightingType">
+    <xs:all>
+      <xs:element name="first_name"      type="xs:string"/>
+      <xs:element name="last_name"       type="xs:string"/>
+      <xs:element name="email"           type="xs:string"/>
+      <xs:element name="site_name"       type="xs:string"/>
+      <xs:element name="session_date"    type="xs:string"/>
+      <xs:element name="start_time"      type="xs:string"/>
+      <xs:element name="end_time"        type="xs:string"/>
+      <xs:element name="species_name"    type="xs:string"/>
+      <xs:element name="count"           type="xs:string"/>
+      <xs:element name="sighting_time"   type="xs:string"/>
+      <xs:element name="weather"         type="xs:string"/>
+      <xs:element name="photo_submitted" type="xs:string"/>
+      <xs:element name="notes"           type="xs:string" minOccurs="0"/>
+    </xs:all>
+  </xs:complexType>
+
+</xs:schema>

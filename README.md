@@ -6,7 +6,7 @@
 
 ## Overview
 
-Volunteers submit wildlife sighting records via CSV files dropped into a watched folder. The pipeline ingests these files, validates and cleans the data, stores it in a relational database, runs analysis algorithms to detect population trends and flag endangered species alerts, and exports reports for partner organisations. It runs from the command line and can process hundreds of files unattended.
+Volunteers submit wildlife sighting records via files dropped into a watched folder. The pipeline ingests these files, validates and cleans the data, stores it in a relational database, runs analysis algorithms to detect population trends and flag endangered species alerts, and exports reports for partner organisations. It runs from the command line and can process hundreds of files unattended.
 
 > **Safety-critical context:** Inaccurate data could lead to wrong policy decisions about protected species. Lost or corrupted records could undermine years of survey work.
 
@@ -21,61 +21,111 @@ Volunteers submit wildlife sighting records via CSV files dropped into a watched
 | Database            | MySQL               | All survey data, fully normalised with indexes                                   |
 | Data exchange       | CSV / JSON / XML    | Ingestion, report output, schema-validated XML                                   |
 
----
-
-## Functional Components
-
-### Component 1 - Database Layer
-*Modules: UI107005 A1 + UI107004 A1*
-
-- **Schema:** ER diagram covering `volunteers`, `survey_sites`, `sightings`, `species`, `survey_sessions`, and `alerts`, normalised to 3NF with each step documented
-- **Data:** 50+ records (auto-populated by the pipeline from CSV files)
-- **Queries (10+):** species frequency by site, volunteer activity rankings, seasonal trends, endangered species sightings, sites with declining populations, and more
-- **Indexes (2+):** with `EXPLAIN` justification, e.g. a composite index on `species + sighting_date` for trend queries
-- **Stored procedure:** accepts a `species_name` and date range, calculates population trend (`increasing`, `decreasing`, or `stable` based on sighting counts), and automatically inserts an alert record when the species is endangered and declining
+For component detail see [docs/components.md](docs/components.md).
 
 ---
 
-### Component 2 - Algorithms and Data Structures (Has been submitted separately)
-*Modules: UI107001 A1 + A2*
+## Prerequisites
 
-| Structure / Algorithm           | Purpose                                                                                                                                                                                     |
-|---------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Hash map** (custom)           | O(1) species lookup index during CSV ingestion, validating that a species exists in reference data. Implements insertion, search, deletion, and collision handling                          |
-| **Binary search tree** (custom) | Stores sighting records ordered by date for efficient range queries (e.g. all sightings between March and June 2025). Implements insertion, search, in-order traversal, and range retrieval |
-| **Merge sort** (custom)         | Sorts sighting records by multiple criteria (e.g. species then count descending) for report generation, and sorts volunteer leaderboards                                                    |
-| **Binary search**               | Efficient lookups on sorted species lists; BST search handles date-range queries                                                                                                            |
-| **Unit tests**                  | Full suite for all four, covering edge cases including empty structures, single element, duplicates, and worst-case inputs                                                                  |
+- Python 3.12+
+- MySQL 8.0+
+- Git
 
 ---
 
-### Component 3 - Data Pipeline and Exchange
-*Modules: UI107004 A1 + A2 + UI107006 A4*
+## Installation
 
-- **CSV Ingestion (Python):** Watches a folder for new CSV files. For each file it validates headers, validates every row (date format, species exists, count is positive, site exists), rejects invalid rows to an error log, and inserts valid rows into the database
-- **JSON Report Generation (Node.js):** Connects to the database, queries all sightings at a given site, and produces a structured JSON report with nested sighting records, served via `GET /report/site/:id`
-- **XML Report Generation (Python or Node.js):** Generates a well-formed XML report of endangered species alerts with a validating schema (XSD or DTD), including site details, species, trend data, and recommended actions as nested elements
-- **XML Parsing (Python):** Imports partner survey data supplied as XML, extracts site name, species observed, and observation counts, then inserts into the database
+**1. Clone the repository**
+
+```bash
+git clone `https://github.com/luke-mitchell02/Highland-Wildlife-Survey.git`
+cd highland-wildlife-survey
+```
+
+**2. Create and activate a virtual environment**
+
+```bash
+python -m venv .venv
+source .venv/bin/activate      # macOS / Linux
+.venv\Scripts\activate         # Windows
+```
+
+**3. Install dependencies**
+
+```bash
+pip install -r requirements.txt
+```
 
 ---
 
-### Component 4 - Documentation
-*All modules*
+## Database Setup
 
-- Agile project plan
-- System design diagrams
-- Comprehensive security review
-- Technical report with Big-O analysis and trade-off comparisons
-- Sustainability statement
+**1. Create the database and tables**
+
+```bash
+mysql -u <user> -p < docs/database_ddl.sql
+```
+
+This creates all tables, indexes, and the auto-ID triggers for `Sessions` and `Sightings`.
+
+**2. Populate reference data**
+
+The pipeline validates incoming records against `Volunteers`, `Sites`, and `Species`. These must contain data before any sighting files can be ingested.
 
 ---
 
-## Agile Project Plan
+## Environment Variables
 
-I have decided to opt for a **Kanban** methodology for this project. I have chosen it as to me it makes most sense for a solo, fast-paced development cycle where work items flow continuously rather than in fixed sprints.
+```bash
+cp app/.env.template app/.env
+```
 
-**Workflow columns:** To Do, Research Phase, In Progress, Done
+| Variable      | Description      | Example       |
+|---------------|------------------|---------------|
+| `DB_HOST`     | MySQL host       | `localhost`   |
+| `DB_PORT`     | MySQL port       | `3306`        |
+| `DB_NAME`     | Database name    | `wildlife_db` |
+| `DB_USER`     | MySQL user       | `root`        |
+| `DB_PASSWORD` | MySQL password   | `password`    |
 
-All progress will be tracked through:
-- **GitHub Commit History** - each commit represents a discrete unit of work, with change messages describing what was changed and why
-- **GitHub Projects Board** - tasks / issues are created per component and moved through the workflow as development progresses
+---
+
+## Running the Pipeline
+
+```bash
+python -m app.main
+```
+
+The pipeline logs a successful connection and begins monitoring:
+
+```
+18-Apr-26 10:00:00 - INFO - MySQL Connection Successful
+18-Apr-26 10:00:00 - INFO - Monitoring directory: ./app/data_dropoff/
+```
+
+Drop a sighting file into `app/data_dropoff/`. Supported formats are CSV, JSON, and XML - use the templates in `sample_data/` as a starting point.
+
+| Format | Template                              | Sample                                      |
+|--------|---------------------------------------|---------------------------------------------|
+| CSV    | `sample_data/sightings_template.csv`  | `sample_data/sample_sightings_clean_1.csv`  |
+| JSON   | `sample_data/sightings_template.json` | `sample_data/sample_sightings_clean_1.json` |
+| XML    | `sample_data/sightings_template.xml`  | `sample_data/sample_sightings_clean_1.xml`  |
+
+The pipeline validates every row and logs warnings for any that fail. Only valid rows are inserted.
+
+Press `Ctrl+C` to stop.
+
+---
+
+## Documentation
+
+Many of the following are placeholders for work that is yet to be done. I have added (WIP) to the description to show these more clearly.
+
+| Document                                                            | Description                                                   |
+|---------------------------------------------------------------------|---------------------------------------------------------------|
+| [docs/components.md](docs/components.md)                            | Component breakdown and Agile Methodology                     |
+| [docs/architecture.md](docs/architecture.md)                        | System Architecture and Data Flow Diagrams (WIP)              |
+| [docs/database.md](docs/database.md)                                | Database Design, Mormalisation, ER Diagram                    |
+| [docs/security.md](docs/security.md)                                | Security Review, SQL Injection Analysis, Insider Threat (WIP) |
+| [docs/technical_report.md](docs/technical_report.md)                | SQL vs NoSQL, JSON vs XML, Sustainability Analysis (WIP)      |
+| [docs/sustainability_security_statement.md](docs/sustainability.md) | Sustainability Analysis (WIP)                                 |

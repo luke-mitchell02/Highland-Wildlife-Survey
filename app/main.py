@@ -2,7 +2,9 @@
 import time
 import sys
 import csv
+import json
 
+from lxml import etree as lxml_etree
 from app.components.validation import *
 from watchdog.events import FileSystemEventHandler
 from app.components import db, custom_logger
@@ -10,6 +12,7 @@ from watchdog.observers import Observer
 from mysql.connector.cursor import MySQLCursor
 
 MONITORING_PATH = "./app/data_dropoff/"
+XML_SCHEMA_PATH = "./app/schemas/sightings.xsd"
 logger = custom_logger.get_logger()
 
 class FileCreationListener(FileSystemEventHandler):
@@ -22,13 +25,16 @@ class FileCreationListener(FileSystemEventHandler):
 
     # Events
     def on_created(self, event):
-        if not event.src_path.endswith(".csv"):
-            return
+        path = str(event.src_path)
 
-        logger.info(f"Event: {event.event_type}, Path: {event.src_path}")
-        self.process_csv(str(event.src_path))
+        if event.src_path.endswith(".csv"):
+            self.process_csv(path)
+        elif event.src_path.endswith(".xml"):
+            self.process_xml(path)
+        elif event.src_path.endswith(".json"):
+            self.process_json(path)
 
-    # Functions
+    # File Handling
     def process_csv(self, path: str) -> None:
         conn = db.connect()
         cursor = conn.cursor(dictionary=True)
@@ -36,7 +42,7 @@ class FileCreationListener(FileSystemEventHandler):
         try:
             with open(path) as csvfile:
                 reader = csv.DictReader(csvfile)
-                valid_rows = self.validate_rows(conn, cursor, reader)
+                valid_rows = self.validate_rows(conn=conn, cursor=cursor, fieldnames=list(reader.fieldnames or []), rows=list(reader))
 
                 if valid_rows:
                     self.upload_rows(conn, cursor, valid_rows)
@@ -44,6 +50,47 @@ class FileCreationListener(FileSystemEventHandler):
             cursor.close()
             conn.close()
 
+    def process_json(self, path: str) -> None:
+        conn = db.connect()
+        cursor = conn.cursor(dictionary=True)
+
+        try:
+            with open(path) as f:
+                data = json.load(f)
+                rows = [{k: str(v) for k, v in row.items()} for row in data]
+                fieldnames = list(rows[0].keys()) if rows else []
+                valid_rows = self.validate_rows(conn=conn, cursor=cursor, fieldnames=fieldnames, rows=rows)
+
+                if valid_rows:
+                    self.upload_rows(conn, cursor, valid_rows)
+        finally:
+            cursor.close()
+            conn.close()
+
+    def process_xml(self, path: str) -> None:
+        conn = db.connect()
+        cursor = conn.cursor(dictionary=True)
+
+        try:
+            schema = lxml_etree.XMLSchema(lxml_etree.parse(XML_SCHEMA_PATH))
+            doc = lxml_etree.parse(path)
+
+            if not schema.validate(doc):
+                logger.error(f"XML file failed schema validation: {schema.error_log.last_error}")
+                return
+
+            root = doc.getroot()
+            rows = [{child.tag: child.text or "" for child in sighting} for sighting in root.findall("sighting")]
+            fieldnames = list(rows[0].keys()) if rows else []
+            valid_rows = self.validate_rows(conn=conn, cursor=cursor, fieldnames=fieldnames, rows=rows)
+
+            if valid_rows:
+                self.upload_rows(conn, cursor, valid_rows)
+        finally:
+            cursor.close()
+            conn.close()
+
+    # Validation
     def build_schema(self, cursor: MySQLCursor) -> dict:
         schema = {
             "first_name": {"min_length": 1, "max_length": 64, "normaliser": None},
@@ -62,18 +109,20 @@ class FileCreationListener(FileSystemEventHandler):
         }
         return schema
 
-    def validate_rows(self, conn, cursor: MySQLCursor, reader: csv.DictReader) -> list | None:
+    def validate_rows(self, conn, cursor: MySQLCursor, fieldnames: list, rows: list[dict]) -> list | None:
         schema = self.build_schema(cursor)
 
-        # Ensure all headings
-        existing_headings = set(reader.fieldnames)
-        if existing_headings != set(schema.keys()):
+        # Ensure all headings in CSV
+        if set(fieldnames) != set(schema.keys()):
             logger.error(f"The uploaded CSV file does not match the template structure")
             return
 
         valid_rows = []
-        for row in reader:
-            line_num = reader.line_num
+        for line_num, row in enumerate(rows, start=2):
+            if set(row.keys()) != set(schema.keys()):  # Ensure consistent schema in JSON and XML
+                logger.warning(f"Row #{line_num} -> fields do not match template structure")
+                continue
+
             is_valid = True
             new_row = {}
 
@@ -115,6 +164,7 @@ class FileCreationListener(FileSystemEventHandler):
         logger.info(f"Validation Complete - Found {len(valid_rows)} valid row(s)")
         return valid_rows
 
+    # Upload
     def upload_rows(self, conn, cursor: MySQLCursor, valid_rows: list) -> None:
         rows = []
 

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sightings>
+  <sighting>
+    <first_name>Eilidh</first_name>
+    <last_name>MacLeod</last_name>
+    <email>eilidh.m@email.com</email>
+    <site_name>Speyside Wetland Centre</site_name>
+    <session_date>2026-04-03</session_date>
+    <start_time>08:30</start_time>
+    <end_time>11:00</end_time>
+    <species_name>Osprey</species_name>
+    <count>1</count>
+    <sighting_time>09:12</sighting_time>
+    <weather>Sunny</weather>
+    <photo_submitted>Yes</photo_submitted>
+    <notes>Adult circling over loch</notes>
+  </sighting>
+  <sighting>
+    <first_name>Eilidh</first_name>
+    <last_name>MacLeod</last_name>
+    <email>eilidh.m@email.com</email>
+    <site_name>Speyside Wetland Centre</site_name>
+    <session_date>2026-04-03</session_date>
+    <start_time>08:30</start_time>
+    <end_time>11:00</end_time>
+    <species_name>Golden Plover</species_name>
+    <count>4</count>
+    <sighting_time>09:12</sighting_time>
+    <weather>Sunny</weather>
+    <photo_submitted>No</photo_submitted>
+    <notes>Small group feeding near water edge</notes>
+  </sighting>
+  <sighting>
+    <first_name>Calum</first_name>
+    <last_name>Ross</last_name>
+    <email>c.ross@email.com</email>
+    <site_name>Findhorn Bay Watchpoint</site_name>
+    <session_date>2026-04-04</session_date>
+    <start_time>10:00</start_time>
+    <end_time>12:30</end_time>
+    <species_name>Grey Seal</species_name>
+    <count>2</count>
+    <sighting_time>10:41</sighting_time>
+    <weather>Cloudy</weather>
+    <photo_submitted>Yes</photo_submitted>
+    <notes>Pair hauled out on sandbank</notes>
+  </sighting>
+</sightings>

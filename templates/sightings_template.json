@@ -1,0 +1,17 @@
+[
+  {
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "site_name": "",
+    "session_date": "YYYY-MM-DD",
+    "start_time": "HH:MM",
+    "end_time": "HH:MM",
+    "species_name": "",
+    "count": "",
+    "sighting_time": "HH:MM",
+    "weather": "",
+    "photo_submitted": "",
+    "notes": ""
+  }
+]

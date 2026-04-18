@@ -1,0 +1,4 @@
+watchdog==6.0.0
+mysql-connector-python==9.6.0
+python-dotenv==1.2.2
+lxml==6.1.0

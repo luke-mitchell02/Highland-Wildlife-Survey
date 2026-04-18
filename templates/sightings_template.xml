@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sightings>
+  <sighting>
+    <first_name></first_name>
+    <last_name></last_name>
+    <email></email>
+    <site_name></site_name>
+    <session_date>YYYY-MM-DD</session_date>
+    <start_time>HH:MM</start_time>
+    <end_time>HH:MM</end_time>
+    <species_name></species_name>
+    <count></count>
+    <sighting_time>HH:MM</sighting_time>
+    <weather></weather>
+    <photo_submitted>Y/N</photo_submitted>
+    <notes></notes>
+  </sighting>
+</sightings>

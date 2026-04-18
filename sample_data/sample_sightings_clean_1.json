@@ -1,0 +1,47 @@
+[
+  {
+    "first_name": "Eilidh",
+    "last_name": "MacLeod",
+    "email": "eilidh.m@email.com",
+    "site_name": "Speyside Wetland Centre",
+    "session_date": "2026-04-03",
+    "start_time": "08:30",
+    "end_time": "11:00",
+    "species_name": "Osprey",
+    "count": "1",
+    "sighting_time": "09:12",
+    "weather": "Sunny",
+    "photo_submitted": "Yes",
+    "notes": "Adult circling over loch"
+  },
+  {
+    "first_name": "Eilidh",
+    "last_name": "MacLeod",
+    "email": "eilidh.m@email.com",
+    "site_name": "Speyside Wetland Centre",
+    "session_date": "2026-04-03",
+    "start_time": "08:30",
+    "end_time": "11:00",
+    "species_name": "Golden Plover",
+    "count": "4",
+    "sighting_time": "09:12",
+    "weather": "Sunny",
+    "photo_submitted": "No",
+    "notes": "Small group feeding near water edge"
+  },
+  {
+    "first_name": "Calum",
+    "last_name": "Ross",
+    "email": "c.ross@email.com",
+    "site_name": "Findhorn Bay Watchpoint",
+    "session_date": "2026-04-04",
+    "start_time": "10:00",
+    "end_time": "12:30",
+    "species_name": "Grey Seal",
+    "count": "2",
+    "sighting_time": "10:41",
+    "weather": "Cloudy",
+    "photo_submitted": "Yes",
+    "notes": "Pair hauled out on sandbank"
+  }
+]
