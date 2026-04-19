@@ -43,14 +43,3 @@
 - Technical report with Big-O analysis and trade-off comparisons
 - Sustainability statement
 
----
-
-## Agile Project Plan
-
-A **Kanban** methodology was chosen for this project as it suits a solo, fast-paced development cycle where work items flow continuously rather than in fixed sprints.
-
-**Workflow columns:** To Do, Research Phase, In Progress, Done
-
-Progress is tracked through:
-- **GitHub Commit History** - each commit represents a discrete unit of work with a descriptive message
-- **GitHub Projects Board** - tasks and issues are created per component and moved through the workflow as development progresses

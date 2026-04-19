@@ -117,15 +117,30 @@ Press `Ctrl+C` to stop.
 
 ---
 
+## Running the Tests
+
+Unit tests have been created to cover indepth testing of the validation and normalisation logic in `app/components/validation.py`.
+
+```bash
+python -m pytest testing/ -v
+```
+
+See [docs/test_log.md](/testing/test_log.md) for the full test log including unit test results, manual pipeline tests, and CRUD testing.
+
+---
+
 ## Documentation
 
 Many of the following are placeholders for work that is yet to be done. I have added (WIP) to the description to show these more clearly.
 
-| Document                                                            | Description                                                   |
-|---------------------------------------------------------------------|---------------------------------------------------------------|
-| [docs/components.md](docs/components.md)                            | Component breakdown and Agile Methodology                     |
-| [docs/architecture.md](docs/architecture.md)                        | System Architecture and Data Flow Diagrams (WIP)              |
-| [docs/database.md](docs/database.md)                                | Database Design, Mormalisation, ER Diagram                    |
-| [docs/security.md](docs/security.md)                                | Security Review, SQL Injection Analysis, Insider Threat (WIP) |
-| [docs/technical_report.md](docs/technical_report.md)                | SQL vs NoSQL, JSON vs XML, Sustainability Analysis (WIP)      |
-| [docs/sustainability_security_statement.md](docs/sustainability.md) | Sustainability Analysis (WIP)                                 |
+| Document                                                            | Description                                                    |
+|---------------------------------------------------------------------|----------------------------------------------------------------|
+| [docs/agile_plan.md](docs/agile_plan.md)                            | Agile project plan, user stories, and task breakdown           |
+| [docs/components.md](docs/components.md)                            | Component breakdown                                            |
+| [docs/architecture.md](docs/architecture.md)                        | System Architecture and Data Flow Diagrams (WIP)               |
+| [docs/database.md](docs/database.md)                                | Database Design, Mormalisation, ER Diagram                     |
+| [docs/security.md](docs/security.md)                                | Security Review, SQL Injection Analysis, Insider Threat (WIP)  |
+| [docs/technical_report.md](docs/technical_report.md)                | SQL vs NoSQL, JSON vs XML, Sustainability Analysis (WIP)       |
+| [docs/sustainability_security_statement.md](docs/sustainability.md) | Sustainability Analysis (WIP)                                  |
+| [docs/test_log.md](/testing/test_log.md)                            | Unit test results, manual pipeline tests, and CRUD testing     |
+| [testing/deviation_log.md](testing/deviation_log.md)                | Log of deviations from the original plan and their resolutions |

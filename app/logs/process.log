@@ -1,0 +1,13 @@
+19-Apr-26 15:24:39 [ERROR]: The uploaded CSV file does not match the template structure
+19-Apr-26 15:25:15 [WARNING]: Row #2 -> session_date is not valid
+19-Apr-26 15:26:34 [WARNING]: Row #2 -> species_name is not valid
+19-Apr-26 15:27:32 [WARNING]: Row #2 -> count is not valid
+19-Apr-26 15:28:21 [WARNING]: Row #2 -> weather is not valid
+19-Apr-26 15:29:01 [WARNING]: Row #2 -> email is not valid
+19-Apr-26 15:47:05 [WARNING]: Row #2 -> session_date is not valid
+19-Apr-26 15:49:26 [WARNING]: Row #2 -> session_date is not valid
+19-Apr-26 15:53:00 [WARNING]: Row #2 -> session_date is not valid
+19-Apr-26 15:53:38 [WARNING]: Row #2 -> email is not valid
+19-Apr-26 23:17:38 [ERROR]: The uploaded CSV file does not match the template structure
+19-Apr-26 23:20:52 [ERROR]: XML file failed schema validation: /Users/luke/Documents/GitHub/Highland Wildlife Survey/app/data_dropoff/sample_sightings_clean_1.xml:3:0:ERROR:SCHEMASV:SCHEMAV_ELEMENT_CONTENT: Element 'sighting': Missing child element(s). Expected is ( weather ).
+19-Apr-26 23:21:21 [WARNING]: Row #2 -> species_name is not valid

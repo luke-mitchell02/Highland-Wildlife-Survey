@@ -1,5 +1,6 @@
 import logging
 
+
 class ConsoleFormatter(logging.Formatter):
     blue = "\x1b[38;5;45m"
     green = '\033[92m'
@@ -26,18 +27,23 @@ class ConsoleFormatter(logging.Formatter):
 
 
 def get_logger() -> logging.Logger:
-    # Create or retrieve logger
     logger = logging.getLogger()
 
     if logger.handlers:
         return logger
 
-    logger.setLevel(logging.INFO)  # Will capture all levels from DEBUG and above
+    logger.setLevel(logging.INFO)
 
-    # Create console handler for printing logs to console
+    # Log to console
     console_handler = logging.StreamHandler()
-    console_handler.setLevel(logging.DEBUG)  # Will capture all levels from INFO and above
+    console_handler.setLevel(logging.DEBUG)
     console_handler.setFormatter(ConsoleFormatter())
     logger.addHandler(console_handler)
+
+    # Log errors to file
+    file_handler = logging.FileHandler("./app/logs/process.log")
+    file_handler.setLevel(logging.WARNING)
+    file_handler.setFormatter(logging.Formatter("%(asctime)s [%(levelname)s]: %(message)s", datefmt='%d-%b-%y %H:%M:%S'))
+    logger.addHandler(file_handler)
 
     return logger

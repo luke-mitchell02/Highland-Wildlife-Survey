@@ -5,11 +5,21 @@ import csv
 import json
 
 from lxml import etree as lxml_etree
-from app.components.validation import *
 from watchdog.events import FileSystemEventHandler
 from app.components import db, custom_logger
 from watchdog.observers import Observer
 from mysql.connector.cursor import MySQLCursor
+from app.components.validation import (
+    normalise_date,
+    normalise_time,
+    normalise_number,
+    normalise_weather,
+    normalise_boolean,
+    verify_site,
+    verify_volunteer,
+    verify_session,
+    verify_species
+)
 
 MONITORING_PATH = "./app/data_dropoff/"
 XML_SCHEMA_PATH = "./app/schemas/sightings.xsd"
@@ -112,9 +122,9 @@ class FileCreationListener(FileSystemEventHandler):
     def validate_rows(self, conn, cursor: MySQLCursor, fieldnames: list, rows: list[dict]) -> list | None:
         schema = self.build_schema(cursor)
 
-        # Ensure all headings in CSV
+        # Ensure all keys match the schema
         if set(fieldnames) != set(schema.keys()):
-            logger.error(f"The uploaded CSV file does not match the template structure")
+            logger.error(f"The uploaded file does not match the template structure")
             return
 
         valid_rows = []
@@ -154,11 +164,12 @@ class FileCreationListener(FileSystemEventHandler):
 
                 new_row[key] = normalised_value
 
-            # Verify Session
-            result = verify_session(conn, cursor, volunteer_id=new_row['volunteer']['volunteer_id'], site_id=new_row['site']['site_id'], date=new_row['session_date'], start_time=new_row['start_time'], end_time=new_row['end_time'])
-            new_row['session_id'] = result['session_id']
-
             if is_valid:
+                # Verify Session
+                result = verify_session(conn, cursor, volunteer_id=new_row['volunteer']['volunteer_id'], site_id=new_row['site']['site_id'], date=new_row['session_date'], start_time=new_row['start_time'], end_time=new_row['end_time'])
+                new_row['session_id'] = result['session_id']
+
+                # Append new row
                 valid_rows.append(new_row)
 
         logger.info(f"Validation Complete - Found {len(valid_rows)} valid row(s)")
