@@ -1,7 +1,7 @@
 import pytest
 
 from datetime import datetime
-from app.components.validation import (
+from components.validation import (
     normalise_date,
     normalise_time,
     normalise_number,

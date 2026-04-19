@@ -4,7 +4,7 @@ import os
 from dotenv import load_dotenv
 from mysql.connector.cursor import MySQLCursor
 
-from app.components import custom_logger
+from components import custom_logger
 
 logger = custom_logger.get_logger()
 load_dotenv()

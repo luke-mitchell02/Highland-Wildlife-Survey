@@ -1,4 +1,4 @@
 .idea
 .venv
-app/.env
+ingestion/src/.env
 *.pyc

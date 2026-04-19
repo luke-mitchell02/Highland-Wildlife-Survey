@@ -2,7 +2,7 @@ import re
 
 from mysql.connector.cursor import MySQLCursor
 
-from app.components import db
+from components import db
 from datetime import datetime
 
 

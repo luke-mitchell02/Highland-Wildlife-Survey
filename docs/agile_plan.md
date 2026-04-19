@@ -133,7 +133,7 @@ All the tasks in each story are Independent, Negotiable, Valuable, Estimable, Sm
 **I want** all warnings, errors, and critical messages logged to a file as well as the console,
 **so that** I can review failed ingestion after the fact without needing to be present when they occur.
 
-**Acceptance criteria:** File handler added at WARNING level, logs written to app/logs/process.log, console output unchanged.
+**Acceptance criteria:** File handler added at WARNING level, logs written to ingestion/src/logs/process.log, console output unchanged.
 
 | Task                                                                               | Priority | Estimate |
 |------------------------------------------------------------------------------------|----------|----------|

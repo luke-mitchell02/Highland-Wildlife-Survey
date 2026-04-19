@@ -6,10 +6,10 @@ import json
 
 from lxml import etree as lxml_etree
 from watchdog.events import FileSystemEventHandler
-from app.components import db, custom_logger
+from components import db, custom_logger
 from watchdog.observers import Observer
 from mysql.connector.cursor import MySQLCursor
-from app.components.validation import (
+from components.validation import (
     normalise_date,
     normalise_time,
     normalise_number,
@@ -21,8 +21,8 @@ from app.components.validation import (
     verify_species
 )
 
-MONITORING_PATH = "./app/data_dropoff/"
-XML_SCHEMA_PATH = "./app/schemas/sightings.xsd"
+MONITORING_PATH = "ingestion/src/data_dropoff/"
+XML_SCHEMA_PATH = "ingestion/src/schemas/sightings.xsd"
 logger = custom_logger.get_logger()
 
 class FileCreationListener(FileSystemEventHandler):

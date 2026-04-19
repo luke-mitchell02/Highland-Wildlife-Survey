@@ -76,10 +76,6 @@ The pipeline validates incoming records against `Volunteers`, `Sites`, and `Spec
 
 ## Environment Variables
 
-```bash
-cp app/.env.template app/.env
-```
-
 | Variable      | Description      | Example       |
 |---------------|------------------|---------------|
 | `DB_HOST`     | MySQL host       | `localhost`   |
@@ -93,7 +89,7 @@ cp app/.env.template app/.env
 ## Running the Pipeline
 
 ```bash
-python -m app.main
+python -m src.main
 ```
 
 The pipeline logs a successful connection and begins monitoring:
