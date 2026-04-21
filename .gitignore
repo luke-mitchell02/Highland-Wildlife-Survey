@@ -2,3 +2,5 @@
 .venv
 ingestion/src/.env
 *.pyc
+.DS_STORE
+*.log

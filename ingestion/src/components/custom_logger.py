@@ -41,7 +41,7 @@ def get_logger() -> logging.Logger:
     logger.addHandler(console_handler)
 
     # Log errors to file
-    file_handler = logging.FileHandler("./src/logs/process.log")
+    file_handler = logging.FileHandler("ingestion/src/logs/process.log")
     file_handler.setLevel(logging.WARNING)
     file_handler.setFormatter(logging.Formatter("%(asctime)s [%(levelname)s]: %(message)s", datefmt='%d-%b-%y %H:%M:%S'))
     logger.addHandler(file_handler)

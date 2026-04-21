@@ -11,3 +11,24 @@
 19-Apr-26 23:17:38 [ERROR]: The uploaded CSV file does not match the template structure
 19-Apr-26 23:20:52 [ERROR]: XML file failed schema validation: /Users/luke/Documents/GitHub/Highland Wildlife Survey/app/data_dropoff/sample_sightings_clean_1.xml:3:0:ERROR:SCHEMASV:SCHEMAV_ELEMENT_CONTENT: Element 'sighting': Missing child element(s). Expected is ( weather ).
 19-Apr-26 23:21:21 [WARNING]: Row #2 -> species_name is not valid
+21-Apr-26 10:38:07 [ERROR]: JSON file is invalid and failed validation: /Users/luke/Documents/GitHub/Highland Wildlife Survey/ingestion/src/data_dropoff/sample_sightings_clean_1.json
+21-Apr-26 10:38:48 [ERROR]: XML file is invalid and failed validation: /Users/luke/Documents/GitHub/Highland Wildlife Survey/ingestion/src/data_dropoff/sample_sightings_clean_1.xml
+21-Apr-26 10:39:13 [WARNING]: Row #2 -> email is not valid
+21-Apr-26 10:39:13 [WARNING]: Row #4 -> email is not valid
+21-Apr-26 10:39:13 [WARNING]: Row #5 -> species_name is not valid
+21-Apr-26 10:39:13 [WARNING]: Row #7 -> count is not valid
+21-Apr-26 10:39:13 [WARNING]: Row #8 -> sighting_time is not valid
+21-Apr-26 10:39:13 [WARNING]: Row #9 -> site_name is not valid
+21-Apr-26 10:39:13 [WARNING]: Row #11 -> count is not valid
+21-Apr-26 10:39:14 [WARNING]: Row #2 -> first_name is not valid
+21-Apr-26 10:39:14 [WARNING]: Row #3 -> email is not valid
+21-Apr-26 10:39:14 [WARNING]: Row #4 -> email is not valid
+21-Apr-26 10:39:14 [WARNING]: Row #5 -> email is not valid
+21-Apr-26 10:39:14 [WARNING]: Row #6 -> email is not valid
+21-Apr-26 10:39:14 [WARNING]: Row #7 -> email is not valid
+21-Apr-26 10:39:14 [WARNING]: Row #8 -> email is not valid
+21-Apr-26 10:39:14 [WARNING]: Row #9 -> email is not valid
+21-Apr-26 10:39:14 [WARNING]: Row #10 -> email is not valid
+21-Apr-26 10:39:14 [WARNING]: Row #11 -> email is not valid
+21-Apr-26 11:05:48 [WARNING]: Row #66 -> fields do not match template structure
+21-Apr-26 11:05:48 [WARNING]: Row #67 -> fields do not match template structure

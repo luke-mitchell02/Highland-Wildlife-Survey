@@ -26,13 +26,13 @@ All the tasks in each story are Independent, Negotiable, Valuable, Estimable, Sm
 
 **Acceptance criteria:** Schema implemented in MySQL, normalised to 3NF with each step documented, 50+ realistic records populated, all foreign key constraints enforced.
 
-| Task                                                 | Priority | Estimate |
-|------------------------------------------------------|----------|----------|
-| Design ER diagram covering all 6 entities            | High     | 30m      |
-| Document normalisation steps UNF → 1NF → 2NF → 3NF   | High     | 1.5h     |
-| Write DDL (CREATE TABLE with PKs, FKs, constraints)  | High     | 45m      |
-| Write triggers to auto-generate formatted unique IDs | High     | 15m      |
-| Populate reference data (volunteers, sites, species) | Low      | 1h       |
+| Task                                                  | Priority | Estimate |
+|-------------------------------------------------------|----------|----------|
+| Design ER diagram covering all 6 entities             | High     | 30m      |
+| Document normalisation steps UNF -> 1NF -> 2NF -> 3NF | High     | 1.5h     |
+| Write DDL (CREATE TABLE with PKs, FKs, constraints)   | High     | 45m      |
+| Write triggers to auto-generate formatted unique IDs  | High     | 15m      |
+| Populate reference data (volunteers, sites, species)  | Low      | 1h       |
 
 ---
 

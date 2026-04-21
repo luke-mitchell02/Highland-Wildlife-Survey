@@ -73,6 +73,8 @@ class FileCreationListener(FileSystemEventHandler):
 
                 if valid_rows:
                     self.upload_rows(conn, cursor, valid_rows)
+        except json.JSONDecodeError:
+            logger.error(f"JSON file is invalid and failed validation: {path}")
         finally:
             cursor.close()
             conn.close()
@@ -96,6 +98,9 @@ class FileCreationListener(FileSystemEventHandler):
 
             if valid_rows:
                 self.upload_rows(conn, cursor, valid_rows)
+
+        except lxml_etree.XMLSyntaxError:
+            logger.error(f"XML file is invalid and failed validation: {path}")
         finally:
             cursor.close()
             conn.close()
