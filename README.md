@@ -77,13 +77,17 @@ The pipeline validates incoming records against `Volunteers`, `Sites`, and `Spec
 
 ## Environment Variables
 
-| Variable      | Description      | Example       |
-|---------------|------------------|---------------|
-| `DB_HOST`     | MySQL host       | `localhost`   |
-| `DB_PORT`     | MySQL port       | `3306`        |
-| `DB_NAME`     | Database name    | `wildlife_db` |
-| `DB_USER`     | MySQL user       | `root`        |
-| `DB_PASSWORD` | MySQL password   | `password`    |
+Both the pipeline and the API require a `.env` file. Create one at `ingestion/src/.env` and another at `api/.env`, both with the same contents.
+
+Copy the example below and change the values after the `=` signs to match your configuration.
+
+```
+DB_HOST=localhost
+DB_PORT=3306
+DB_NAME=wildlife_db
+DB_USER=root
+DB_PASSWORD=password
+```
 
 ---
 
