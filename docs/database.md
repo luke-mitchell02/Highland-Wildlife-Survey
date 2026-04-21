@@ -190,12 +190,6 @@ Species ||--o{ Alerts : ""
 
 ---
 
-## Indexes
-
-I will add indexes once the database and application are set up. They will be chosen based on the queries that are actually used, with `EXPLAIN` output provided to justify each one for performance improvements on frequently run queries.
-
----
-
 ## Triggers
 
 Two `BEFORE INSERT` triggers have been added to auto-generate the formatted primary key for Sessions and Sightings. This means the application never needs to supply an ID manually.
@@ -212,4 +206,103 @@ This may be updated in the future to use MAX() as counting rows is only useful i
 
 ## Stored Procedure
 
-I will add the stored procedure at a later date.
+The `identify_population_trend` stored procedure accepts a species name and a date range, calculates whether the population is increasing, decreasing, or stable, and inserts an alert if the species is endangered and declining.
+
+```sql
+CALL identify_population_trend('Osprey', '2026-01-01', '2026-04-30');
+```
+
+### How it works
+
+The procedure splits the provided date range in half and compares the total `individuals_count` from the first half against the second half.
+
+1. **Species Identification** - retrieves the `species_id` and `conservation_status` from the Species table. Raises a `SQLSTATE 45000` error if the species name is not found.
+2. **Date Midpoint Calculation** - uses `DATEDIFF` to find the halfway point of the date range.
+3. **Sighting Count** - runs two queries which join `Sightings` to `Sessions`, one for each half of the range.
+4. **Trend Identification** - compares the two counts:
+   - Second half higher -> `Increasing`
+   - Second half lower -> `Decreasing`
+   - Equal -> `Stable`
+5. **Alert** - If the species has a `conservation_status` of `Endangered` or `Critically Endangered` and the trend is `Decreasing`: insert a row into `Alerts` table.
+
+The procedure also returns a result row showing the species name, trend, both half-counts, and whether an alert was inserted. This is mainly for debugging but also so an output is always visible when called manually.
+
+---
+
+## Indexes
+
+Two indexes were added and tested using `EXPLAIN` to measure their impact on query performance.
+
+### Index 1 - `Sessions.date`
+
+This column is used a lot in the date range queries and inside the `identify_population_trend` stored procedure. Without an index, MySQL scans all session rows and filters by date afterwards.
+
+```sql
+CREATE INDEX idx_sessions_date ON Sessions(date);
+```
+
+**Query tested:**
+```sql
+EXPLAIN SELECT sg.sighting_id, sg.individuals_count
+FROM Sightings sg
+JOIN Sessions se ON sg.session_id = se.session_id
+WHERE se.date BETWEEN '2026-01-01' AND '2026-04-30';
+```
+
+**Before:**
+
+Before the index, MySQL used the composite `volunteer_id` unique index as a fallback scan, with only 11.11% of rows matching the date filter.
+
+| table | type  | key           | key_len | rows | filtered | Extra                       |
+|-------|-------|---------------|---------|------|----------|-----------------------------|
+| se    | index | volunteer_id  | 135     | 28   | 11.11%   | Using where; Using index    |
+| sg    | ref   | volunteer_idx | 66      | 7    | 100.00%  |                             |
+
+**After:**
+
+After adding `idx_sessions_date`, MySQL uses the correct index for the date range and `filtered` rises to 100%, meaning every row accessed matches the condition. 
+
+The `key_len` also drops from 135 to 3, reflecting the smaller date index.
+
+| table | type  | key               | key_len | rows | filtered | Extra                    |
+|-------|-------|-------------------|---------|------|----------|--------------------------|
+| se    | index | idx_sessions_date | 3       | 28   | 100.00%  | Using where; Using index |
+| sg    | ref   | volunteer_idx     | 66      | 8    | 100.00%  |                          |
+
+---
+
+### Index 2 - `Species.conservation_status`
+
+This column is used a lot in the endangered species filter query (RD-03) and the stored procedure alert condition. Without an index, MySQL performs a full table scan across all species rows and filters by conservation status afterwards.
+
+```sql
+CREATE INDEX idx_species_conservation ON Species(conservation_status);
+```
+
+**Query tested:**
+```sql
+EXPLAIN SELECT sg.sighting_id, sp.species_name, sp.conservation_status
+FROM Sightings sg
+JOIN Species sp ON sg.species_id = sp.species_id
+WHERE sp.conservation_status IN ('Endangered', 'Critically Endangered');
+```
+
+**Before:**
+
+Before the index, MySQL performed a full table scan (`type=ALL`) across all 100 species rows, with only 40% of rows matching the filter.
+
+| table | type | key          | key_len | rows | filtered | Extra       |
+|-------|------|--------------|---------|------|----------|-------------|
+| sp    | ALL  | NULL         | NULL    | 100  | 40.00%   | Using where |
+| sg    | ref  | species_name | 66      | 11   | 100.00%  | Using index |
+
+**After:**
+
+After adding `idx_species_conservation`, the scan type changed to `range`, meaning MySQL uses the index to jump directly to matching rows.
+
+The rows examined dropped from 100 to 6, and `filtered` rose to 100% - every row accessed now matches the condition.
+
+| table | type  | key                      | key_len | rows | filtered | Extra                 |
+|-------|-------|--------------------------|---------|------|----------|-----------------------|
+| sp    | range | idx_species_conservation | 1       | 6    | 100.00%  | Using index condition |
+| sg    | ref   | species_name             | 66      | 11   | 100.00%  | Using index           |
