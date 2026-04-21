@@ -28,6 +28,7 @@ For component detail see [docs/components.md](docs/components.md).
 ## Prerequisites
 
 - Python 3.12+
+- Node.js 18+
 - MySQL 8.0+
 - Git
 
@@ -110,6 +111,23 @@ Drop a sighting file into `app/data_dropoff/`. Supported formats are CSV, JSON, 
 The pipeline validates every row and logs warnings for any that fail. Only valid rows are inserted.
 
 Press `Ctrl+C` to stop.
+
+---
+
+## Running the API
+
+```bash
+cd api
+npm install
+npm run start
+```
+
+The API runs on `http://localhost:3000` by default. Available endpoints:
+
+| Method | Endpoint             | Description                        |
+|--------|----------------------|------------------------------------|
+| GET    | `/report/site/:id`   | JSON sighting report for a site    |
+| GET    | `/report/alerts`     | XML report of endangered species alerts |
 
 ---
 
