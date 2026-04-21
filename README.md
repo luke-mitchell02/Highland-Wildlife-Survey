@@ -40,7 +40,7 @@ For component detail see [docs/components.md](docs/components.md).
 
 ```bash
 git clone `https://github.com/luke-mitchell02/Highland-Wildlife-Survey.git`
-cd highland-wildlife-survey
+cd Highland-Wildlife-Survey
 ```
 
 **2. Create and activate a virtual environment**
@@ -90,7 +90,7 @@ The pipeline validates incoming records against `Volunteers`, `Sites`, and `Spec
 ## Running the Pipeline
 
 ```bash
-python -m src.main
+python ingestion/src/main.py
 ```
 
 The pipeline logs a successful connection and begins monitoring:
@@ -102,8 +102,8 @@ The pipeline logs a successful connection and begins monitoring:
 
 Drop a sighting file into `ingestion/src/data_dropoff/`. Supported formats are CSV, JSON, and XML - use the templates in `ingestion/templates/` as a starting point.
 
-| Format | Template                                      | Sample                                               |
-|--------|-----------------------------------------------|------------------------------------------------------|
+| Format | Template                                      | Sample                                                |
+|--------|-----------------------------------------------|-------------------------------------------------------|
 | CSV    | `ingestion/templates/sightings_template.csv`  | `ingestion/sample_data/sample_sightings_clean_1.csv`  |
 | JSON   | `ingestion/templates/sightings_template.json` | `ingestion/sample_data/sample_sightings_clean_1.json` |
 | XML    | `ingestion/templates/sightings_template.xml`  | `ingestion/sample_data/sample_sightings_clean_1.xml`  |
@@ -124,9 +124,9 @@ npm run start
 
 The API runs on `http://localhost:3000` by default. Available endpoints:
 
-| Method | Endpoint             | Description                        |
-|--------|----------------------|------------------------------------|
-| GET    | `/report/site/:id`   | JSON sighting report for a site    |
+| Method | Endpoint             | Description                             |
+|--------|----------------------|-----------------------------------------|
+| GET    | `/report/site/:id`   | JSON sighting report for a site         |
 | GET    | `/report/alerts`     | XML report of endangered species alerts |
 
 ---
