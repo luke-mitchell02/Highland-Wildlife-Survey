@@ -97,16 +97,16 @@ The pipeline logs a successful connection and begins monitoring:
 
 ```
 18-Apr-26 10:00:00 - INFO - MySQL Connection Successful
-18-Apr-26 10:00:00 - INFO - Monitoring directory: ./app/data_dropoff/
+18-Apr-26 10:00:00 - INFO - Monitoring directory: ./ingestion/src/data_dropoff/
 ```
 
-Drop a sighting file into `app/data_dropoff/`. Supported formats are CSV, JSON, and XML - use the templates in `sample_data/` as a starting point.
+Drop a sighting file into `ingestion/src/data_dropoff/`. Supported formats are CSV, JSON, and XML - use the templates in `ingestion/templates/` as a starting point.
 
-| Format | Template                              | Sample                                      |
-|--------|---------------------------------------|---------------------------------------------|
-| CSV    | `sample_data/sightings_template.csv`  | `sample_data/sample_sightings_clean_1.csv`  |
-| JSON   | `sample_data/sightings_template.json` | `sample_data/sample_sightings_clean_1.json` |
-| XML    | `sample_data/sightings_template.xml`  | `sample_data/sample_sightings_clean_1.xml`  |
+| Format | Template                                      | Sample                                               |
+|--------|-----------------------------------------------|------------------------------------------------------|
+| CSV    | `ingestion/templates/sightings_template.csv`  | `ingestion/sample_data/sample_sightings_clean_1.csv`  |
+| JSON   | `ingestion/templates/sightings_template.json` | `ingestion/sample_data/sample_sightings_clean_1.json` |
+| XML    | `ingestion/templates/sightings_template.xml`  | `ingestion/sample_data/sample_sightings_clean_1.xml`  |
 
 The pipeline validates every row and logs warnings for any that fail. Only valid rows are inserted.
 
@@ -133,7 +133,7 @@ The API runs on `http://localhost:3000` by default. Available endpoints:
 
 ## Running the Tests
 
-Unit tests have been created to cover indepth testing of the validation and normalisation logic in `app/components/validation.py`.
+Unit tests have been created to cover indepth testing of the validation and normalisation logic in `ingestion/src/components/validation.py`.
 
 ```bash
 python -m pytest testing/ -v
