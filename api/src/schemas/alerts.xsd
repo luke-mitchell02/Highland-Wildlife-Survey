@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="alerts">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="alert" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="species">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="id" type="xs:string"/>
+                    <xs:element name="name" type="xs:string"/>
+                    <xs:element name="scientific_name" type="xs:string"/>
+                    <xs:element name="conservation_status" type="xs:string"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="trend">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="direction" type="xs:string"/>
+                    <xs:element name="population_estimate" type="xs:integer"/>
+                    <xs:element name="change" type="xs:integer"/>
+                    <xs:element name="generated_time" type="xs:string"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="sites">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="site" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="id" type="xs:string"/>
+                          <xs:element name="name" type="xs:string"/>
+                          <xs:element name="region" type="xs:string"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="recommended_action" type="xs:string"/>
+            </xs:sequence>
+            <xs:attribute name="id" type="xs:integer" use="required"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="generated" type="xs:string" use="required"/>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>
