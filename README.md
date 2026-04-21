@@ -127,16 +127,14 @@ See [docs/test_log.md](/testing/test_log.md) for the full test log including uni
 
 ## Documentation
 
-Many of the following are placeholders for work that is yet to be done. I have added (WIP) to the description to show these more clearly.
-
 | Document                                                            | Description                                                    |
 |---------------------------------------------------------------------|----------------------------------------------------------------|
 | [docs/agile_plan.md](docs/agile_plan.md)                            | Agile project plan, user stories, and task breakdown           |
 | [docs/components.md](docs/components.md)                            | Component breakdown                                            |
-| [docs/architecture.md](docs/architecture.md)                        | System Architecture and Data Flow Diagrams (WIP)               |
+| [docs/architecture.md](docs/architecture.md)                        | System Architecture and Data Flow Diagrams                     |
 | [docs/database.md](docs/database.md)                                | Database Design, Mormalisation, ER Diagram                     |
-| [docs/security.md](docs/security.md)                                | Security Review, SQL Injection Analysis, Insider Threat (WIP)  |
-| [docs/technical_report.md](docs/technical_report.md)                | SQL vs NoSQL, JSON vs XML, Sustainability Analysis (WIP)       |
-| [docs/sustainability_security_statement.md](docs/sustainability.md) | Sustainability Analysis (WIP)                                  |
+| [docs/security.md](docs/security.md)                                | Security Review, SQL Injection Analysis, Insider Threat        |
+| [docs/technical_report.md](docs/technical_report.md)                | SQL vs NoSQL, JSON vs XML, Sustainability Analysis             |
+| [docs/sustainability_security_statement.md](docs/sustainability.md) | Sustainability Analysis                                        |
 | [docs/test_log.md](/testing/test_log.md)                            | Unit test results, manual pipeline tests, and CRUD testing     |
 | [testing/deviation_log.md](testing/deviation_log.md)                | Log of deviations from the original plan and their resolutions |

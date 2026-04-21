@@ -126,3 +126,25 @@ View the database DDL creation in the [docs/database_ddl](/docs/database_ddl.sql
 | SP-01   | Declining endangered species - alert inserted | `CALL identify_population_trend('Osprey', '2026-01-01', '2026-04-30')`        | Trend: Decreasing, alert inserted into Alerts table | As expected   | Pass      |
 | SP-02   | Increasing species - no alert                 | `CALL identify_population_trend('Mountain Hare', '2026-01-01', '2026-04-30')` | Trend: Increasing, no alert inserted                | As expected   | Pass      |
 | SP-03   | Species not in database - error raised        | `CALL identify_population_trend('Unicorn', '2026-01-01', '2026-04-30')`       | SQL Error (1644): Species not found                 | As expected   | Pass      |
+
+---
+
+## 4. API Tests
+
+I tested the API manually by using [Bruno](https://www.usebruno.com/). The server was started with `npm run start:dev` from the `api/` directory. 
+
+Then all tests were run against `http://localhost:3000` ensuring all the responses were as expected.
+
+### 4.1 GET /report/site/:id
+
+| Test ID | Scenario                    | Request                              | Expected                                                                 | Actual      | Pass/Fail |
+|---------|-----------------------------|--------------------------------------|--------------------------------------------------------------------------|-------------|-----------|
+| AT-01   | Valid site ID               | `GET /report/site/ST-0001`           | 200 JSON with site fields, nested sessions, sightings, and species data  | As expected | Pass      |
+| AT-02   | Site ID does not exist      | `GET /report/site/INVALID_SITE_1023` | 404 with message "Site INVALID_SITE_1023 not found"                      | As expected | Pass      |
+
+### 4.2 GET /report/alerts
+
+| Test ID | Scenario                    | Request                          | Expected                                                                 | Actual      | Pass/Fail |
+|---------|-----------------------------|----------------------------------|--------------------------------------------------------------------------|-------------|-----------|
+| AT-03   | Alerts exist in database    | `GET /report/alerts`             | 200 with `Content-Type: application/xml`, well-formed XML document       | As expected | Pass      |
+| AT-04   | XML passes XSD validation   | `GET /report/alerts`             | Response XML validates against `alerts.xsd` without error                | As expected | Pass      |
